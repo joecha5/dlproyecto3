@@ -18,16 +18,17 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module MultiplicadorBooth(clk, rst, LoadA, LoadB, LoadAdd, Shift, A, B, SEL, Q0, Q1, prod, rs
+module MultiplicadorBooth(clk, rst, LoadA, LoadB, LoadAdd, Shift, A, B, SEL, Q0, Q1, prod, rs, XA, XB
     );
 	 
 	 input clk, rst, LoadA, LoadB, LoadAdd, Shift, SEL, rs;
 	 input [3:0] A, B;
+	 output [3:0] XA, XB;
 	 output Q0, Q1;
 	 output [7:0] prod;
 	 
 	
-	 wire [3:0] OUT, X, Y, Data_Out; 
+	 wire [3:0] OUT, Y, Data_Out; 
 	 
 	 
 	 assign prod = {Data_Out, Y};
@@ -43,6 +44,6 @@ module MultiplicadorBooth(clk, rst, LoadA, LoadB, LoadAdd, Shift, A, B, SEL, Q0,
 	 
 	 regDesplazamiento HQ(clk, rst| rs, Shift, LoadAdd, OUT, Data_Out);
 	 
-	 RegDesLQ LQ(clk, rst, Shift, LoadB, Z, B, Y);
+	 RegDesLQ LQ(clk, rst, LoadB, B, XB);
 
 endmodule
