@@ -18,20 +18,24 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module MultSecuencial(clk, rst, valid, A, B, prod, DONE);
+module MultSecuencial(clk, rst, valid, A, B, XA, XB);
 	 
 	 input wire clk, rst, valid;
 	 input wire [3:0] A, B;
+	 output wire [3:0] XA, XB;
 	 output [7:0] prod;
-	 output DONE;
 	 
-	 wire LoadA, LoadB, LoadAdd, Shift, AddSub, Q0, Q1, enable, press, rs, Count;
+	 wire LoadA, LoadB, LoadAdd, Shift, AddSub, W, Q1, enable, press, rs, Count, DONE;
 	 
-	 FSM fsm(clk, rst, valid, Count, Q0, Q1, LoadA, LoadB, LoadAdd, Shift, AddSub, DONE, press, enable, rs);
+	 FSM fsm(clk, rst, valid, Count, W, Q1, LoadA, LoadB, LoadAdd, Shift, AddSub, DONE, press, enable, rs);
 	 
-	 MultiplicadorBooth mb(clk, rst, LoadA, LoadB, LoadAdd, Shift, A, B, AddSub, Q0, Q1, prod, rs);
+	 MultiplicadorBooth mb(clk, rst, LoadA, LoadB, LoadAdd, Shift, A, B, AddSub, W, Q1, prod2, rs, XA, XB);
 	 
-	 Count con(clk, rst, press, enable, Count);
+         Count con(clk, rst, press, enable, Count);
+
+	 Registro8bits regsalida(clk, rst, DONE, prod2, prod);
+	 
+	 
 
 
 
